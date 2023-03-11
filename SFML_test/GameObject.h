@@ -15,6 +15,5 @@ public:
 	virtual void update_object(const sf::RenderTarget* target) = 0;
 	virtual void render_object(sf::RenderTarget* target) = 0;
 	virtual void move_object() = 0;
-	virtual void spawn_object() = 0;
 };
 

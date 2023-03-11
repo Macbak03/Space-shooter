@@ -3,11 +3,11 @@
 
 Enemy::Enemy() : max_enemy_ammount(7)
 {
-	this->enemy_ammount = 0;
+	this->movement_speed = 2.f;
 	this->health = 10;
 	this->initShape();
-	this->spawn_object();
-
+	this->enemy_spawn_timer_max = 1000.f;
+	this-> enemy_spawn_timer = this->enemy_spawn_timer_max;
 }
 
 Enemy::~Enemy()
@@ -20,23 +20,49 @@ void Enemy::initShape()
 	this->e_shape.setSize(sf::Vector2f(20.f, 20.f));
 }
 
-void Enemy::spawn_object()
+void Enemy::spawn_object(const sf::RenderTarget* target)
 {
-	x = static_cast<float> (rand() % 800);
+	x = static_cast<float> (rand() % static_cast<int>((target->getSize().x) - this->e_shape.getSize().x));
 	this->e_shape.setPosition(sf::Vector2f(x, 0.f));
+
+	this->enemies.push_back(this->e_shape);
+
+	this->move_object();
 }
 
 void Enemy::move_object()
 {
+	for (auto& e : this->enemies)
+	{
+		e.move(0.f, this->movement_speed);
+	}
 }
 
 void Enemy::update_object(const sf::RenderTarget* target)
 {
+	if (this->enemies.size() < this->max_enemy_ammount)
+	{
+		if (this->enemy_spawn_timer >= this->enemy_spawn_timer_max)
+		{
+			//spawn enemy and reset a timer
+			this->spawn_object(target);
+			this->enemy_spawn_timer = 0.f;
+		}
+		else
+		{
+			this->enemy_spawn_timer += 1.f;
+		}
+	}
+	this->move_object();
 }
 
 void Enemy::render_object(sf::RenderTarget* target)
 {
-	target->draw(this->e_shape);
+	for (auto& e : this->enemies)
+	{
+		target->draw(e);
+	}
+	
 }
 
 

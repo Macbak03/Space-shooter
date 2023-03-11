@@ -4,8 +4,8 @@ using namespace sf;
 
 int main()
 {
-    //Initialize random seed
-    srand(static_cast<unsigned>(time(0)));
+    //Initialize srand
+    std::srand(static_cast<unsigned>(time(NULL)));
 
     //Init Game engine
     Game game;

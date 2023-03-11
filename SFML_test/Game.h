@@ -6,7 +6,7 @@
 #include <SFML/Network.hpp>
 #include <ctime>
 #include "Player.h"
-#include"Enemy.h"
+#include "Enemy.h"
 /*
 	Class that acts llike a game engine.
 	Wraper class

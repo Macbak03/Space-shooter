@@ -60,6 +60,7 @@ void Game::update()
 {
 	this->pollEvents();
 	this->player.update_object(this->window);
+	this->enemy.update_object(this->window);
 }
 
 void Game::render()
@@ -79,8 +80,11 @@ void Game::render()
 	this->player.render_object(this->window);
 	this->player.update_object(this->window);
 	//Draw enemy
-	
+
 	this->enemy.render_object(this->window);
+	this->enemy.update_object(this->window);
+
+	
 
 
 	this->window->display();
