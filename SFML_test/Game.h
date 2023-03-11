@@ -19,8 +19,10 @@ private:
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
+
 	Player player;
 	Enemy enemy;
+
 	bool endGame;
 	//Functions
 	void initVariables();

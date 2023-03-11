@@ -17,7 +17,7 @@ Player::~Player()
 void Player::initShape()
 {
 	this -> p_shape.setFillColor(sf::Color::Blue);
-	this -> p_shape.setRadius(20.f);
+	this -> p_shape.setSize(sf::Vector2f(30.f, 30.f));
 }
 
 void Player::spawn_object()
@@ -25,7 +25,7 @@ void Player::spawn_object()
 	this->p_shape.setPosition(sf::Vector2f(390.f,500.f));
 }
 
-void Player::updateWindowBounceCollision(const sf::RenderTarget* target)
+void Player::update_window_bounce_collision(const sf::RenderTarget* target)
 {
 	
 	//left
@@ -34,19 +34,19 @@ void Player::updateWindowBounceCollision(const sf::RenderTarget* target)
 		this->p_shape.setPosition(0.f, this->p_shape.getGlobalBounds().top);
 	}
 	//right
-	else if (this->p_shape.getGlobalBounds().left + 2*this->p_shape.getRadius() >= target->getSize().x)
+	else if (this->p_shape.getGlobalBounds().left + this->p_shape.getGlobalBounds().width >= target->getSize().x)
 	{
-		this->p_shape.setPosition(target->getSize().x - 2* this->p_shape.getRadius(), this->p_shape.getGlobalBounds().top);
+		this->p_shape.setPosition(target->getSize().x - this->p_shape.getGlobalBounds().width, this->p_shape.getGlobalBounds().top);
 	}
 	//top
 	if (this->p_shape.getGlobalBounds().top <= 0.f)
 	{
-		this->p_shape.setPosition(this->p_shape.getGlobalBounds().left - static_cast<float>(0.10955), 0.f);
+		this->p_shape.setPosition(this->p_shape.getGlobalBounds().left , 0.f);
 	}
 	//bottom
-	else if (this->p_shape.getGlobalBounds().top + 2 * this->p_shape.getRadius() >= target->getSize().y)
+	else if (this->p_shape.getGlobalBounds().top +  this->p_shape.getGlobalBounds().height >= target->getSize().y)
 	{
-		this->p_shape.setPosition(this->p_shape.getGlobalBounds().left - static_cast < float>(0.10955), target->getSize().y - 2 * this->p_shape.getRadius());
+		this->p_shape.setPosition(this->p_shape.getGlobalBounds().left, target->getSize().y - this->p_shape.getGlobalBounds().height);
 	}
 }
 
@@ -76,10 +76,22 @@ void Player::move_object()
 	}
 }
 
+float Player::get_player_y_position()
+{
+	float y_position = this->p_shape.getPosition().y;
+	return y_position;
+}
+
+float Player::get_player_x_position()
+{
+	float x_position = this->p_shape.getPosition().x;
+	return x_position;
+}
+
 void Player::update_object(const sf::RenderTarget* target)
 {
 	//window collision
-	this->updateWindowBounceCollision(target);
+	this->update_window_bounce_collision(target);
 	//move player
 	this->move_object();
 

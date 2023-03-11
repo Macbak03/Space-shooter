@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 using namespace sf;
 
 int main()
@@ -16,7 +17,7 @@ int main()
 
         //Update
         game.update();
-
+       
         //Render
         game.render();
     }

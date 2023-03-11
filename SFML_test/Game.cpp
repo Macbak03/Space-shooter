@@ -2,11 +2,13 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Boss.h"
+#include <iostream>
 
 void Game::initVariables()
 {
 	this->window = nullptr;
 	this->endGame = false;
+
 }
 
 void Game::initWindow()
@@ -60,7 +62,7 @@ void Game::update()
 {
 	this->pollEvents();
 	this->player.update_object(this->window);
-	this->enemy.update_object(this->window);
+	this->enemy.update_object(this->window, player);
 }
 
 void Game::render()
@@ -80,9 +82,10 @@ void Game::render()
 	this->player.render_object(this->window);
 	this->player.update_object(this->window);
 	//Draw enemy
+	//std::cout << player.get_player_x_position() << "     " << player.get_player_y_position()<<std::endl;
 
 	this->enemy.render_object(this->window);
-	this->enemy.update_object(this->window);
+	this->enemy.update_object(this->window, player);
 
 	
 
