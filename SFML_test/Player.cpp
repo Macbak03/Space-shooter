@@ -27,31 +27,52 @@ void Player::spawn_object()
 
 void Player::updateWindowBounceCollision(const sf::RenderTarget* target)
 {
-	//left side
-	sf::Vector2f playerPosition = this->p_shape.getPosition();
+	
+	//left
 	if (this->p_shape.getGlobalBounds().left <= 0.f)
 	{
-		this->p_shape.setPosition(0.f, playerPosition.y);
+		this->p_shape.setPosition(0.f, this->p_shape.getGlobalBounds().top);
 	}
-	//right side
+	//right
 	else if (this->p_shape.getGlobalBounds().left + 2*this->p_shape.getRadius() >= target->getSize().x)
 	{
-		this->p_shape.setPosition(target->getSize().x - 2* this->p_shape.getRadius(), playerPosition.y);
+		this->p_shape.setPosition(target->getSize().x - 2* this->p_shape.getRadius(), this->p_shape.getGlobalBounds().top);
 	}
-
+	//top
+	if (this->p_shape.getGlobalBounds().top <= 0.f)
+	{
+		this->p_shape.setPosition(this->p_shape.getGlobalBounds().left - static_cast<float>(0.10955), 0.f);
+	}
+	//bottom
+	else if (this->p_shape.getGlobalBounds().top + 2 * this->p_shape.getRadius() >= target->getSize().y)
+	{
+		this->p_shape.setPosition(this->p_shape.getGlobalBounds().left - static_cast < float>(0.10955), target->getSize().y - 2 * this->p_shape.getRadius());
+	}
 }
 
 
 
 void Player::move_object()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	//move left
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		this->p_shape.move(-this->movement_speed, 0.f);
+	}
+	//move right
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		this->p_shape.move(this->movement_speed, 0.f);
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	//move top
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		this->p_shape.move(-this->movement_speed, 0.f);
+		this->p_shape.move(0.f, -this->movement_speed);
+	}
+	//move left
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		this->p_shape.move(0.f , this->movement_speed);
 	}
 }
 

@@ -32,9 +32,9 @@ void Enemy::spawn_object(const sf::RenderTarget* target)
 
 void Enemy::move_object()
 {
-	for (auto& e : this->enemies)
+	for (int i = 0; i < this->enemies.size(); i++)
 	{
-		e.move(0.f, this->movement_speed);
+		this->enemies[i].move(0.f, this->movement_speed);
 	}
 }
 
