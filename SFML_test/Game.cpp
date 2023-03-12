@@ -3,12 +3,13 @@
 #include "Enemy.h"
 #include "Boss.h"
 #include <iostream>
+#include <sstream>
 
 void Game::initVariables()
 {
 	this->window = nullptr;
 	this->endGame = false;
-
+	this->points = 0;
 }
 
 void Game::initWindow()
@@ -18,11 +19,29 @@ void Game::initWindow()
 	this->window = new sf::RenderWindow(this->videoMode, "The Game", sf::Style::Titlebar | sf::Style::Close);
 	this->window->setFramerateLimit(60);
 }
+void Game::initFont()
+{
+	if (!this->font.loadFromFile("Fonts/BAUHS93.ttf")) 
+	{
+		std::cout<<"Error loading font"<<std::endl;
+	}
+}
+
+void Game::initText()
+{
+	this->text.setFont(this->font);
+	this->text.setCharacterSize(18);
+	this->text.setFillColor(sf::Color::White);
+	this->text.setOutlineColor(sf::Color::Black);
+	this->text.setOutlineThickness(2);
+}
 
 Game::Game()
 {
 	this->initVariables();
 	this->initWindow();
+	this->initFont();
+	this->initText();
 }
 
 Game::~Game()
@@ -57,12 +76,27 @@ void Game::pollEvents()
 	}
 }
 
+void Game::updateGui()
+{
+	std::stringstream ss;
+
+	ss << "Points: " << this->points;
+
+	this->text.setString(ss.str());
+}
+
 //Functions
 void Game::update()
 {
 	this->pollEvents();
 	this->player.update_object(this->window);
 	this->enemy.update_object(this->window, player);
+	this->updateGui();
+}
+
+void Game::renderGui(sf::RenderTarget* target)
+{
+	target->draw(this->text);
 }
 
 void Game::render()
@@ -82,11 +116,10 @@ void Game::render()
 	this->player.render_object(this->window);
 	this->player.update_object(this->window);
 	//Draw enemy
-	//std::cout << player.get_player_x_position() << "     " << player.get_player_y_position()<<std::endl;
-
 	this->enemy.render_object(this->window);
 	this->enemy.update_object(this->window, player);
-
+	//Render GUIinterface
+	this->renderGui(this->window);
 	
 
 

@@ -76,17 +76,13 @@ void Player::move_object()
 	}
 }
 
-float Player::get_player_y_position()
+const sf::RectangleShape& Player::get_shape() const
 {
-	float y_position = this->p_shape.getPosition().y;
-	return y_position;
+	return this->p_shape;
 }
 
-float Player::get_player_x_position()
-{
-	float x_position = this->p_shape.getPosition().x;
-	return x_position;
-}
+
+
 
 void Player::update_object(const sf::RenderTarget* target)
 {

@@ -20,6 +20,14 @@ void Enemy::initShape()
 	this->e_shape.setSize(sf::Vector2f(20.f, 20.f));
 }
 
+void Enemy::move_object()
+{
+	for (int i = 0; i < this->enemies.size(); i++)
+	{
+		this->enemies[i].move(0.f, this->movement_speed);
+	}
+}
+
 void Enemy::spawn_object(const sf::RenderTarget* target)
 {
 	//setting position of an enemy
@@ -32,16 +40,23 @@ void Enemy::spawn_object(const sf::RenderTarget* target)
 	this->move_object();
 }
 
+const sf::RectangleShape Enemy::get_shape() const
+{
+	return this->e_shape;
+}
+
 void Enemy::update_collison(const sf::RenderTarget* target, Player player)
 {
 	for (int i = 0; i < this->enemies.size(); i++)
 	{
+		//collision with bounds of the window
 		if (this->enemies[i].getGlobalBounds().top + this->e_shape.getSize().y >= target->getSize().y)
 		{
 			this->enemies.erase(this->enemies.begin() + i);
 		}
-		else if (this->enemies[i].getGlobalBounds().top + this->e_shape.getSize().y == player.get_player_y_position()
-				 || this->enemies[i].getGlobalBounds().top + this->e_shape.getSize().y == player.get_player_x_position())
+		//collision with player
+		else if (player.get_shape().getGlobalBounds().intersects(this->enemies[i].getGlobalBounds()))
+				 
 		{
 			this->enemies.erase(this->enemies.begin() + i);
 		}
@@ -49,13 +64,6 @@ void Enemy::update_collison(const sf::RenderTarget* target, Player player)
 	
 }
 
-void Enemy::move_object()
-{
-	for (int i = 0; i < this->enemies.size(); i++)
-	{
-		this->enemies[i].move(0.f, this->movement_speed);
-	}
-}
 
 void Enemy::update_object(const sf::RenderTarget* target, Player player)
 {

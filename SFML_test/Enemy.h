@@ -23,5 +23,7 @@ public:
 	void render_object(sf::RenderTarget* target) override;
 	void move_object() override;
 	void spawn_object(const sf::RenderTarget* target);
+	const sf::RectangleShape get_shape() const;
 	void update_collison(const sf::RenderTarget* target, Player player);
+	
 };

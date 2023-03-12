@@ -23,10 +23,17 @@ private:
 	Player player;
 	Enemy enemy;
 
+	int points;
+
+	sf::Font font;
+	sf::Text text;
+
 	bool endGame;
 	//Functions
 	void initVariables();
 	void initWindow();
+	void initFont();
+	void initText();
 
 public:
 	//Constructors / Destructors
@@ -36,7 +43,9 @@ public:
 	const bool getWindowIsOpen();
 	//Functions
 	void pollEvents();
+	void updateGui();
 	void update();
+	void renderGui(sf::RenderTarget* target);
 	void render();
 };
 
