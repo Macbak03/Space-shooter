@@ -10,7 +10,8 @@ private:
 	float x, y;
 	const int proj_max;
 	float proj_spawn_timer;
-	float proj_spawn_timer_max;
+	float proj_spawn_timer_min;
+
 
 	std::vector<sf::RectangleShape> projectiles;
 

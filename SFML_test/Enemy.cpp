@@ -28,7 +28,6 @@ void Enemy::spawn_object(const sf::RenderTarget* target)
 	//adding enemy to a vector
 	this->enemies.push_back(this->e_shape);
 
-	//this->move_object();
 }
 
 const sf::RectangleShape Enemy::get_shape() const

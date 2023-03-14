@@ -4,9 +4,10 @@
 
 Projectile::Projectile() : proj_max(100)
 {
+	this->movement_speed = 10.f;
+	this->proj_spawn_timer_min = 50.f;
+	this->proj_spawn_timer = this->proj_spawn_timer_min;
 	init_shape();
-	this->proj_spawn_timer_max = 10.f;
-	this->proj_spawn_timer = this->proj_spawn_timer_max;
 }
 
 void Projectile::init_shape()
@@ -35,15 +36,20 @@ const sf::RectangleShape& Projectile::get_shape() const
 
 void Projectile::move_object()
 {
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		this->projectiles[i].move(0.f, - this->movement_speed);
+	}
+	
 }
 
 void Projectile::update_object(Player player)
 {
 	if (this->projectiles.size() < this->proj_max)
 	{
-		if (this->proj_spawn_timer >= this->proj_spawn_timer_max)
+		if (this->proj_spawn_timer >= this->proj_spawn_timer_min)
 		{
-			//spawn enemy and reset a timer
+			//spawn projectile and reset a timer
 			this->spawn_object(player);
 			this->proj_spawn_timer = 0.f;
 		}
@@ -52,11 +58,15 @@ void Projectile::update_object(Player player)
 			this->proj_spawn_timer += 1.f;
 		}
 	}
+	this->move_object();
 }
 
 void Projectile::render_object(sf::RenderTarget* target)
 {
-	target->draw(this->proj_shape);
+	for (auto& e : projectiles)
+	{
+		target->draw(e);
+	}
 }
 
 
