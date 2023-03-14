@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h";
 #include "Player.h"
-#include "Enemy.h"
+
 
 class Projectile : public GameObject
 {
@@ -25,5 +25,6 @@ public:
 	
 	const sf::RectangleShape& get_shape() const;
 
+	const std::vector<sf::RectangleShape>& get_projectiles() const;
 };
 

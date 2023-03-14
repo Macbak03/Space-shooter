@@ -4,7 +4,6 @@
 Enemy::Enemy() : max_enemy_ammount(7)
 {
 	this->movement_speed = 1.f;
-	this->health = 10;
 	this->init_shape();
 	this->enemy_spawn_timer_max = 100.f;
 	this-> enemy_spawn_timer = this->enemy_spawn_timer_max;
@@ -35,7 +34,7 @@ const sf::RectangleShape Enemy::get_shape() const
 	return this->e_shape;
 }
 
-void Enemy::update_collison(const sf::RenderTarget* target, Player player)
+void Enemy::update_collison(const sf::RenderTarget* target, Player player, Projectile projectile)
 {
 	for (int i = 0; i < this->enemies.size(); i++)
 	{
@@ -52,10 +51,19 @@ void Enemy::update_collison(const sf::RenderTarget* target, Player player)
 			this->enemies.erase(this->enemies.begin() + i);
 			player.health -= 10;
 		}
+		//collision with projectile
+		for (int j = 0; j < projectile.get_projectiles().size(); j++)
+		{
+			if (projectile.get_projectiles()[j].getGlobalBounds().intersects(this->enemies[i].getGlobalBounds()))
+
+			{
+				this->enemies.erase(this->enemies.begin() + i);
+			}
+		}
+		 
 	}
 
 }
-
 
 void Enemy::move_object()
 {
@@ -65,7 +73,7 @@ void Enemy::move_object()
 	}
 }
 
-void Enemy::update_object(const sf::RenderTarget* target, Player player)
+void Enemy::update_object(const sf::RenderTarget* target, Player player, Projectile projectile)
 {
 	if (this->enemies.size() < this->max_enemy_ammount)
 	{
@@ -80,7 +88,7 @@ void Enemy::update_object(const sf::RenderTarget* target, Player player)
 			this->enemy_spawn_timer += 1.f;
 		}
 	}
-	this->update_collison(target, player);
+	this->update_collison(target, player, projectile);
 	this->move_object();
 
 }

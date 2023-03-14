@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include <vector>
 #include "Player.h"
+#include "Projectile.h"
+
 class Enemy : public GameObject
 {
 private:
@@ -18,11 +20,11 @@ private:
 	void init_shape() override;
 public:
 	Enemy();
-	void update_object(const sf::RenderTarget* target, Player player);
+	void update_object(const sf::RenderTarget* target, Player player, Projectile projectile);
 	void render_object(sf::RenderTarget* target) override;
 	void move_object() override;
 	void spawn_object(const sf::RenderTarget* target);
 	const sf::RectangleShape get_shape() const;
-	void update_collison(const sf::RenderTarget* target, Player player);
+	void update_collison(const sf::RenderTarget* target, Player player, Projectile projectile);
 	
 };

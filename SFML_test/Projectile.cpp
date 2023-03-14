@@ -34,6 +34,11 @@ const sf::RectangleShape& Projectile::get_shape() const
 	return this->proj_shape;
 }
 
+const std::vector<sf::RectangleShape>& Projectile::get_projectiles() const
+{
+	return this->projectiles;
+}
+
 void Projectile::move_object()
 {
 	for (int i = 0; i < projectiles.size(); i++)
