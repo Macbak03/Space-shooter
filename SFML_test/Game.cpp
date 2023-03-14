@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Player.h"
-#include "Enemy.h"
 #include "Boss.h"
 #include <iostream>
 #include <sstream>
@@ -118,6 +116,9 @@ void Game::render()
 	//Draw enemy
 	this->enemy.render_object(this->window);
 	this->enemy.update_object(this->window, player);
+	//Draw projectiles
+	this->projectile.render_object(this->window);
+	this->projectile.update_object(this->player);
 	//Render GUIinterface
 	this->renderGui(this->window);
 	

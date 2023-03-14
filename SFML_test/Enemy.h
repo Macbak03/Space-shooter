@@ -15,10 +15,9 @@ private:
 	std::vector<sf::RectangleShape> enemies;
 
 	//initializing shape and color of an enemy
-	void initShape();
+	void init_shape() override;
 public:
 	Enemy();
-	virtual ~Enemy();
 	void update_object(const sf::RenderTarget* target, Player player);
 	void render_object(sf::RenderTarget* target) override;
 	void move_object() override;

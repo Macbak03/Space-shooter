@@ -5,16 +5,12 @@ Player::Player()
 {
 	this->health = 100;
 	this->movement_speed = 3.f;
-	this->initShape();
+	this->init_shape();
 	this->spawn_object();
 }
 
-Player::~Player()
-{
-	
-}
 
-void Player::initShape()
+void Player::init_shape()
 {
 	this -> p_shape.setFillColor(sf::Color::Blue);
 	this -> p_shape.setSize(sf::Vector2f(30.f, 30.f));

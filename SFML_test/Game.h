@@ -7,6 +7,7 @@
 #include <ctime>
 #include "Player.h"
 #include "Enemy.h"
+#include "Projectile.h"
 /*
 	Class that acts llike a game engine.
 	Wraper class
@@ -22,6 +23,7 @@ private:
 
 	Player player;
 	Enemy enemy;
+	Projectile projectile;
 
 	int points;
 

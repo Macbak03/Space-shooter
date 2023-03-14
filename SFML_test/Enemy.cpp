@@ -5,28 +5,19 @@ Enemy::Enemy() : max_enemy_ammount(7)
 {
 	this->movement_speed = 1.f;
 	this->health = 10;
-	this->initShape();
+	this->init_shape();
 	this->enemy_spawn_timer_max = 100.f;
 	this-> enemy_spawn_timer = this->enemy_spawn_timer_max;
 }
 
-Enemy::~Enemy()
-{
-}
 
-void Enemy::initShape()
+void Enemy::init_shape()
 {
 	this->e_shape.setFillColor(sf::Color::Red);
 	this->e_shape.setSize(sf::Vector2f(20.f, 20.f));
 }
 
-void Enemy::move_object()
-{
-	for (int i = 0; i < this->enemies.size(); i++)
-	{
-		this->enemies[i].move(0.f, this->movement_speed);
-	}
-}
+
 
 void Enemy::spawn_object(const sf::RenderTarget* target)
 {
@@ -37,7 +28,7 @@ void Enemy::spawn_object(const sf::RenderTarget* target)
 	//adding enemy to a vector
 	this->enemies.push_back(this->e_shape);
 
-	this->move_object();
+	//this->move_object();
 }
 
 const sf::RectangleShape Enemy::get_shape() const
@@ -53,17 +44,27 @@ void Enemy::update_collison(const sf::RenderTarget* target, Player player)
 		if (this->enemies[i].getGlobalBounds().top + this->e_shape.getSize().y >= target->getSize().y)
 		{
 			this->enemies.erase(this->enemies.begin() + i);
+			player.health -= 10;
 		}
 		//collision with player
 		else if (player.get_shape().getGlobalBounds().intersects(this->enemies[i].getGlobalBounds()))
-				 
+
 		{
 			this->enemies.erase(this->enemies.begin() + i);
+			player.health -= 10;
 		}
 	}
-	
+
 }
 
+
+void Enemy::move_object()
+{
+	for (int i = 0; i < this->enemies.size(); i++)
+	{
+		this->enemies[i].move(0.f, this->movement_speed);
+	}
+}
 
 void Enemy::update_object(const sf::RenderTarget* target, Player player)
 {

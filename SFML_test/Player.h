@@ -6,11 +6,10 @@ class Player : public GameObject
 private:
 	sf::RectangleShape p_shape;
 
-	void initShape();
+	void init_shape() override;
 
 public:
 	Player();
-	virtual ~Player();
 	void spawn_object();
 	void update_window_bounce_collision(const sf::RenderTarget* target);
 	void update_object(const sf::RenderTarget* target);

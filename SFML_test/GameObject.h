@@ -11,6 +11,7 @@ private:
 public:
 	int health;
 	float movement_speed;
+	virtual void init_shape() = 0;
 	virtual void render_object(sf::RenderTarget* target) = 0;
 	virtual void move_object() = 0;
 };
