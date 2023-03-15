@@ -58,6 +58,7 @@ void Enemy::update_collison(const sf::RenderTarget* target, Player player, Proje
 
 			{
 				this->enemies.erase(this->enemies.begin() + i);
+				//projectile.get_projectiles().erase(projectile.get_projectiles().begin() + j);
 			}
 		}
 		 

@@ -4,7 +4,7 @@
 Player::Player()
 {
 	this->health = 100;
-	this->movement_speed = 3.f;
+	this->movement_speed = 5.f;
 	this->init_shape();
 	this->spawn_object();
 }

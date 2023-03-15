@@ -4,7 +4,7 @@
 
 Projectile::Projectile() : proj_max(100)
 {
-	this->movement_speed = 10.f;
+	this->movement_speed = 3.f;
 	this->proj_spawn_timer_min = 50.f;
 	this->proj_spawn_timer = this->proj_spawn_timer_min;
 	init_shape();
@@ -34,7 +34,7 @@ const sf::RectangleShape& Projectile::get_shape() const
 	return this->proj_shape;
 }
 
-const std::vector<sf::RectangleShape>& Projectile::get_projectiles() const
+std::vector<sf::RectangleShape>& Projectile::get_projectiles()
 {
 	return this->projectiles;
 }
@@ -48,7 +48,20 @@ void Projectile::move_object()
 	
 }
 
-void Projectile::update_object(Player player)
+
+void Projectile::update_window_collision(const sf::RenderTarget* target)
+{
+	for (int i = 0; i < this->projectiles.size(); i++)
+	{
+		//collision with bounds of the window
+		if (this->projectiles[i].getGlobalBounds().top <= 0)
+		{
+			this->projectiles.erase(this->projectiles.begin() + i);
+		}
+	}
+}
+
+void Projectile::update_object(const sf::RenderTarget* target, Player player)
 {
 	if (this->projectiles.size() < this->proj_max)
 	{
@@ -63,7 +76,9 @@ void Projectile::update_object(Player player)
 			this->proj_spawn_timer += 1.f;
 		}
 	}
+	this->update_window_collision(target);
 	this->move_object();
+	
 }
 
 void Projectile::render_object(sf::RenderTarget* target)

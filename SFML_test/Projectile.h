@@ -1,5 +1,6 @@
 #pragma once
-#include "GameObject.h";
+
+#include "GameObject.h"
 #include "Player.h"
 
 
@@ -20,11 +21,12 @@ public:
 	Projectile();
 	void spawn_object(Player player);
 	void move_object() override;
-	void update_object(Player player);
+	void update_window_collision(const sf::RenderTarget* target);
+	void update_object(const sf::RenderTarget* target, Player player);
 	void render_object(sf::RenderTarget* target) override;
 	
 	const sf::RectangleShape& get_shape() const;
 
-	const std::vector<sf::RectangleShape>& get_projectiles() const;
+	std::vector<sf::RectangleShape>& get_projectiles();
 };
 

@@ -88,8 +88,8 @@ void Game::update()
 {
 	this->pollEvents();
 	this->player.update_object(this->window);
-	this->enemy.update_object(this->window, player, projectile);
-	this->projectile.update_object(player);
+	this->enemy.update_object(this->window, this->player, this->projectile);
+	this->projectile.update_object(this->window, this->player);
 	this->updateGui();
 }
 
@@ -119,7 +119,7 @@ void Game::render()
 	this->enemy.update_object(this->window, player, projectile);
 	//Draw projectiles
 	this->projectile.render_object(this->window);
-	this->projectile.update_object(this->player);
+	this->projectile.update_object(this->window, this->player);
 	//Render GUIinterface
 	this->renderGui(this->window);
 	
