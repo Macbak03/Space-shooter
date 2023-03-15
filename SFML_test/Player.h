@@ -16,5 +16,6 @@ public:
 	void render_object(sf::RenderTarget* target) override;
 	void move_object() override;
 	const sf::RectangleShape& get_shape() const;
+	void change_color();
 
 };

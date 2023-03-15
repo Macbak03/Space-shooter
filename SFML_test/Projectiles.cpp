@@ -1,6 +1,6 @@
 #include "Projectiles.h"
 
-Projectiles::Projectiles() : projectile_max_ammount(100)
+Projectiles::Projectiles() : projectile_max_ammount(100000)
 {
 	this->projectile_spawn_timer_min = 50.f;
 	this->projectile_spawn_timer = this->projectile_spawn_timer_min;
@@ -13,6 +13,7 @@ void Projectiles::spawn_projectile(Player& player)
 		Projectile projectile;
 		projectile.init_position(player);
 		projectiles.push_back(projectile);
+		this->projectile_spawn_timer = 0.f;
 	}
 	
 }
@@ -42,6 +43,7 @@ std::vector<Projectile>& Projectiles::get_projectiles()
 	return this->projectiles;
 }
 
+
 void Projectiles::update_projectiles(Player& player, const sf::RenderTarget* target)
 {
 	if (this->projectiles.size() < this->projectile_max_ammount)
@@ -50,7 +52,6 @@ void Projectiles::update_projectiles(Player& player, const sf::RenderTarget* tar
 		{
 			//spawn projectile and reset a timer
 			this->spawn_projectile(player);
-			this->projectile_spawn_timer = 0.f;
 		}
 		else
 		{

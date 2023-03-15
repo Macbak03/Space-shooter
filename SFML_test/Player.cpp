@@ -4,7 +4,7 @@
 Player::Player()
 {
 	this->health = 100;
-	this->movement_speed = 5.f;
+	this->movement_speed = 7.f;
 	this->init_shape();
 	this->spawn_object();
 }
@@ -76,7 +76,6 @@ const sf::RectangleShape& Player::get_shape() const
 {
 	return this->p_shape;
 }
-
 
 
 

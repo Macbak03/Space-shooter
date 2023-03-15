@@ -22,12 +22,12 @@ void Enemies::move_enemies()
 }
 
 
-void Enemies::update_collision(const sf::RenderTarget* target, Player* player, Projectile& projectile)
+void Enemies::update_collision(const sf::RenderTarget* target, Player* player, Projectile* projectile)
 {
 	this->enemies.erase(std::remove_if(
 		this->enemies.begin(),
 		this->enemies.end(),
-		[target, player, projectile](Enemy const& enemy) {
+		[target, player](Enemy const& enemy, Projectile const& projectile) {
 			//collision with bounds of the window
 			bool window_collision = enemy.get_shape().getGlobalBounds().top + enemy.get_shape().getSize().y >= target->getSize().y;
 			//collision with player
@@ -85,7 +85,7 @@ void Enemies::update_enemies(Player& player, const sf::RenderTarget* target, Pro
 		}
 	}
 	this->move_enemies();
-	this->update_collision(target, &player, projectile);
+	this->update_collision(target, &player, &projectile);
 }
 
 void Enemies::render_enemies(sf::RenderTarget* target)

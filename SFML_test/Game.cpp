@@ -112,13 +112,13 @@ void Game::render()
 
 
 	//Draw player
-	this->player.update_object(this->window);
+	//this->player.update_object(this->window);
 	this->player.render_object(this->window);
 	//Draw enemy
-	this->enemies.update_enemies(this->player, this->window, this->projectiles);
+	//this->enemies.update_enemies(this->player, this->window, this->projectiles);
 	this->enemies.render_enemies(this->window);
 	//Draw projectiles
-	this->projectiles.update_projectiles(this->player, this->window);
+	//this->projectiles.update_projectiles(this->player, this->window);
 	this->projectiles.render_projectiles(this->window);
 	//Render GUIinterface
 	this->renderGui(this->window);
