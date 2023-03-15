@@ -1,32 +1,28 @@
 #include "Projectile.h"
 
+//TODO: repair vector capacity error, when projectile colides with an enemy near a top window bound, add erasing projectile, while coliding with an enemy
 
-
-Projectile::Projectile() : proj_max(100)
+Projectile::Projectile()
 {
 	this->movement_speed = 3.f;
-	this->proj_spawn_timer_min = 50.f;
-	this->proj_spawn_timer = this->proj_spawn_timer_min;
 	init_shape();
 }
 
 void Projectile::init_shape()
 {
+	
 	this->proj_shape.setSize(sf::Vector2f(3.f, 13.f));
 	this->proj_shape.setFillColor(sf::Color::White);
 	this->proj_shape.setOutlineColor(sf::Color::Magenta);
 	this->proj_shape.setOutlineThickness(1);
+	
 }
 
-void Projectile::spawn_object(Player player)
+void Projectile::init_position(Player player)
 {
-	this-> x = player.get_shape().getGlobalBounds().left + player.get_shape().getGlobalBounds().width / 2 - proj_shape.getSize().x / 3;
-	this->y = player.get_shape().getGlobalBounds().top - proj_shape.getSize().y;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		this->proj_shape.setPosition(sf::Vector2f(x,y));
-		this->projectiles.push_back(proj_shape);
-	}
+	float x = player.get_shape().getGlobalBounds().left + player.get_shape().getGlobalBounds().width / 2 - proj_shape.getSize().x / 3;
+	float y = player.get_shape().getGlobalBounds().top - proj_shape.getSize().y;
+	this->proj_shape.setPosition(sf::Vector2f(x, y));
 }
 
 const sf::RectangleShape& Projectile::get_shape() const
@@ -34,61 +30,15 @@ const sf::RectangleShape& Projectile::get_shape() const
 	return this->proj_shape;
 }
 
-std::vector<sf::RectangleShape>& Projectile::get_projectiles()
-{
-	return this->projectiles;
-}
+
 
 void Projectile::move_object()
 {
-	for (int i = 0; i < projectiles.size(); i++)
-	{
-		this->projectiles[i].move(0.f, - this->movement_speed);
-	}
-	
+	proj_shape.move(0.f, -movement_speed);
 }
 
-
-void Projectile::update_window_collision(const sf::RenderTarget* target)
-{
-	for (int i = 0; i < this->projectiles.size(); i++)
-	{
-		//collision with bounds of the window
-		if (this->projectiles[i].getGlobalBounds().top <= 0)
-		{
-			this->projectiles.erase(this->projectiles.begin() + i);
-		}
-	}
-}
-
-void Projectile::update_object(const sf::RenderTarget* target, Player player)
-{
-	if (this->projectiles.size() < this->proj_max)
-	{
-		if (this->proj_spawn_timer >= this->proj_spawn_timer_min)
-		{
-			//spawn projectile and reset a timer
-			this->spawn_object(player);
-			this->proj_spawn_timer = 0.f;
-		}
-		else
-		{
-			this->proj_spawn_timer += 1.f;
-		}
-	}
-	this->update_window_collision(target);
-	this->move_object();
-	
-}
 
 void Projectile::render_object(sf::RenderTarget* target)
 {
-	for (auto& e : projectiles)
-	{
-		target->draw(e);
-	}
+	target->draw(this->proj_shape);
 }
-
-
-
-

@@ -9,8 +9,8 @@ class GameObject
 private:
 
 public:
-	int health;
-	float movement_speed;
+	int health = 0;
+	float movement_speed = 0;
 	virtual void init_shape() = 0;
 	virtual void render_object(sf::RenderTarget* target) = 0;
 	virtual void move_object() = 0;

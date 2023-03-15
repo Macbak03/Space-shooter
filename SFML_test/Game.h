@@ -6,8 +6,9 @@
 #include <SFML/Network.hpp>
 #include <ctime>
 #include "Player.h"
-#include "Enemy.h"
-#include "Projectile.h"
+#include "Enemies.h"
+#include "Projectiles.h"
+
 /*
 	Class that acts llike a game engine.
 	Wraper class
@@ -22,8 +23,8 @@ private:
 	sf::Event ev;
 
 	Player player;
-	Enemy enemy;
-	Projectile projectile;
+	Enemies enemies;
+	Projectiles projectiles;
 
 	int points;
 
