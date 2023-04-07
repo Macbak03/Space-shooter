@@ -3,7 +3,7 @@
 #include "Projectile.h"
 #include <vector>
 
-class Projectiles : public Projectile
+class Projectiles
 {
 private:
 	std::vector<Projectile> projectiles;

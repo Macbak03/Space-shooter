@@ -22,22 +22,33 @@ void Enemies::move_enemies()
 }
 
 
-void Enemies::update_collision(const sf::RenderTarget* target, Player* player, Projectile* projectile)
+void Enemies::update_collision(const sf::RenderTarget* target, Player* player, Projectiles* projectiles)
 {
 	this->enemies.erase(std::remove_if(
 		this->enemies.begin(),
 		this->enemies.end(),
-		[target, player](Enemy const& enemy, Projectile const& projectile) {
+		[target, player, projectiles](Enemy const& enemy) {
 			//collision with bounds of the window
 			bool window_collision = enemy.get_shape().getGlobalBounds().top + enemy.get_shape().getSize().y >= target->getSize().y;
 			//collision with player
 			bool player_collision = player->get_shape().getGlobalBounds().intersects(enemy.get_shape().getGlobalBounds());
 			//collision with projectile
-			bool projectile_collision = projectile.get_shape().getGlobalBounds().intersects(enemy.get_shape().getGlobalBounds());
+			bool projectile_enemy_collision = false;
+			for (auto& element : projectiles->get_projectiles()) {
+				projectile_enemy_collision |= element.get_shape().getGlobalBounds().intersects(enemy.get_shape().getGlobalBounds());
+			}
+			//erasing projectile while hit an enemy
+			auto& projectiles_vector = projectiles->get_projectiles();
+			projectiles_vector.erase(std::remove_if(projectiles_vector.begin(), projectiles_vector.end(), [enemy](Projectile const& projectile) {
+				bool projectile_collision = projectile.get_shape().getGlobalBounds().intersects(enemy.get_shape().getGlobalBounds());
+			return projectile_collision;
+				}),
+				projectiles_vector.end()
+			);
 			if (player_collision) {
 				player->health -= 10;
 			}
-			return window_collision || player_collision || projectile_collision;
+			return window_collision || player_collision || projectile_enemy_collision;
 
 		}),
 		this->enemies.end()
@@ -69,7 +80,7 @@ void Enemies::update_collision(const sf::RenderTarget* target, Player* player, P
 
 }
 
-void Enemies::update_enemies(Player& player, const sf::RenderTarget* target, Projectile& projectile)
+void Enemies::update_enemies(Player& player, const sf::RenderTarget* target, Projectiles& projectiles)
 {
 	if (this->enemies.size() < this->max_enemy_ammount)
 	{
@@ -85,7 +96,7 @@ void Enemies::update_enemies(Player& player, const sf::RenderTarget* target, Pro
 		}
 	}
 	this->move_enemies();
-	this->update_collision(target, &player, &projectile);
+	this->update_collision(target, &player, &projectiles);
 }
 
 void Enemies::render_enemies(sf::RenderTarget* target)

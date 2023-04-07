@@ -2,7 +2,7 @@
 
 Projectiles::Projectiles() : projectile_max_ammount(100000)
 {
-	this->projectile_spawn_timer_min = 50.f;
+	this->projectile_spawn_timer_min = 10.f;
 	this->projectile_spawn_timer = this->projectile_spawn_timer_min;
 }
 

@@ -4,7 +4,7 @@
 
 Projectile::Projectile()
 {
-	this->movement_speed = 11.f;
+	this->movement_speed = 12.f;
 	init_shape();
 }
 

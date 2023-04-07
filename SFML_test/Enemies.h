@@ -14,8 +14,8 @@ public:
 	Enemies();
 	void spawn_enemies(const sf::RenderTarget* target);
 	void render_enemies(sf::RenderTarget* target);
-	void update_enemies(Player& player, const sf::RenderTarget* target, Projectile& projectile);
-	void update_collision(const sf::RenderTarget* target, Player* player, Projectile* projectile);
+	void update_enemies(Player& player, const sf::RenderTarget* target, Projectiles& projectiles);
+	void update_collision(const sf::RenderTarget* target, Player* player, Projectiles* projectiles);
 	void move_enemies();
 };
 
