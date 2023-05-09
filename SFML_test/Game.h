@@ -26,6 +26,8 @@ private:
 	Enemies enemies;
 	Projectiles projectiles;
 
+	sf::Texture background_texture;
+	sf::Sprite space;
 
 	sf::Font font;
 	sf::Text points_text;
@@ -36,7 +38,9 @@ private:
 	//Functions
 	void initVariables();
 	void initWindow();
-	void initFont();
+	void loadTexture();
+	void loadFont();
+	void initBackground();
 	void initText();
 
 public:
@@ -51,6 +55,7 @@ public:
 	void updateGui();
 	void update();
 	void renderGui(sf::RenderTarget* target);
+	void renderBackground(sf::RenderTarget* target);
 	void render();
 };
 

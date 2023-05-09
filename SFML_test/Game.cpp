@@ -13,15 +13,31 @@ void Game::initWindow()
 {
 	this->videoMode.height = 600;
 	this->videoMode.width = 800;
-	this->window = new sf::RenderWindow(this->videoMode, "The Game", sf::Style::Titlebar | sf::Style::Close);
+	this->window = new sf::RenderWindow(this->videoMode, "The Game", sf::Style::Titlebar | sf::Style::Close );
 	this->window->setFramerateLimit(60);
 }
-void Game::initFont()
+void Game::loadTexture()
+{
+	if (!this->background_texture.loadFromFile("Textures/spacefield_a-000.png"))
+	{
+		std::cout << "Error loading font" << std::endl;
+	}
+}
+
+
+
+void Game::loadFont()
 {
 	if (!this->font.loadFromFile("Fonts/BAUHS93.ttf")) 
 	{
 		std::cout<<"Error loading font"<<std::endl;
 	}
+}
+
+void Game::initBackground()
+{
+	this->space.setTexture(background_texture);
+	this->space.setScale(sf::Vector2f(0.8f, 0.8f));
 }
 
 void Game::initText()
@@ -56,7 +72,9 @@ Game::Game()
 {
 	this->initVariables();
 	this->initWindow();
-	this->initFont();
+	this->loadTexture();
+	this->initBackground();
+	this->loadFont();
 	this->initText();
 }
 
@@ -137,6 +155,11 @@ void Game::renderGui(sf::RenderTarget* target)
 	}
 }
 
+void Game::renderBackground(sf::RenderTarget* target)
+{
+	target->draw(this->space);
+}
+
 void Game::render()
 {
 	/*
@@ -149,7 +172,8 @@ void Game::render()
 	*/
 	this->window->clear();
 
-
+	//Draw Background
+	this->renderBackground(this->window);
 	//Draw player
 	//this->player.update_object(this->window);
 	this->player.render_object(this->window);

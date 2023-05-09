@@ -29,7 +29,7 @@ void Enemies::update_collision(const sf::RenderTarget* target, Player* player, P
 		this->enemies.end(),
 		[target, player, projectiles](Enemy const& enemy) {
 			//collision with bounds of the window
-			bool window_collision = enemy.get_shape().getGlobalBounds().top + enemy.get_shape().getSize().y >= target->getSize().y;
+			bool window_collision = enemy.get_shape().getGlobalBounds().top + enemy.get_shape().getGlobalBounds().height >= target->getSize().y;
 			//collision with player
 			bool player_collision = player->get_shape().getGlobalBounds().intersects(enemy.get_shape().getGlobalBounds());
 			//collision with projectile
