@@ -6,8 +6,7 @@
 void Game::initVariables()
 {
 	this->window = nullptr;
-	this->endGame = false;
-	this->points = 0;
+	//this->endGame = false;
 }
 
 void Game::initWindow()
@@ -27,11 +26,30 @@ void Game::initFont()
 
 void Game::initText()
 {
-	this->text.setFont(this->font);
-	this->text.setCharacterSize(18);
-	this->text.setFillColor(sf::Color::White);
-	this->text.setOutlineColor(sf::Color::Black);
-	this->text.setOutlineThickness(2);
+	//Points
+	this->points_text.setFont(this->font);
+	this->points_text.setCharacterSize(18);
+	this->points_text.setFillColor(sf::Color::White);
+	this->points_text.setOutlineColor(sf::Color::Black);
+	this->points_text.setOutlineThickness(2);
+	this->points_text.setPosition(sf::Vector2f(3.f, 0.f));
+
+	//Health
+	this->health_text.setFont(this->font);
+	this->health_text.setCharacterSize(18);
+	this->health_text.setFillColor(sf::Color::White);
+	this->health_text.setOutlineColor(sf::Color::Black);
+	this->health_text.setOutlineThickness(2);
+	this->health_text.setPosition(sf::Vector2f(3.f, 20.f));
+
+	//Game Over
+	this->game_over_text.setFont(this->font);
+	this->game_over_text.setCharacterSize(60);
+	this->game_over_text.setFillColor(sf::Color::Red);
+	this->game_over_text.setOutlineColor(sf::Color::Black);
+	this->game_over_text.setOutlineThickness(2);
+	this->game_over_text.setString("GAME OVER. PRESS ESC");
+	this->game_over_text.setPosition(sf::Vector2f(100.f, 200.f));
 }
 
 Game::Game()
@@ -51,6 +69,17 @@ Game::~Game()
 const bool Game::getWindowIsOpen()
 {
 	return this->window->isOpen();
+}
+
+bool Game::endGame()
+{
+	if (player.health <= 0) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 
@@ -76,26 +105,36 @@ void Game::pollEvents()
 
 void Game::updateGui()
 {
-	std::stringstream ss;
+	std::stringstream points_ss;
+	std::stringstream health_ss;
 
-	ss << "Points: " << this->points;
+	points_ss << "Points: " << this->player.points;
+	this->points_text.setString(points_ss.str());
 
-	this->text.setString(ss.str());
+	health_ss << "Health: " << this->player.health;
+	this->health_text.setString(health_ss.str());
 }
+
 
 //Functions
 void Game::update()
 {
 	this->pollEvents();
-	this->player.update_object(this->window);
-	this->enemies.update_enemies(this->player, this->window, this->projectiles);
-	this->projectiles.update_projectiles(this->player, this->window);
-	this->updateGui();
+	if(!endGame()){
+		this->player.update_object(this->window);
+		this->enemies.update_enemies(this->player, this->window, this->projectiles);
+		this->projectiles.update_projectiles(this->player, this->window);
+		this->updateGui();
+	}
 }
 
 void Game::renderGui(sf::RenderTarget* target)
 {
-	target->draw(this->text);
+	target->draw(this->points_text);
+	target->draw(this->health_text);
+	if (endGame()) {
+		target->draw(this->game_over_text);
+	}
 }
 
 void Game::render()

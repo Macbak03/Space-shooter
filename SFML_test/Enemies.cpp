@@ -2,7 +2,7 @@
 
 Enemies::Enemies() : max_enemy_ammount(7)
 {
-	this->enemy_spawn_timer_min = 100.f;
+	this->enemy_spawn_timer_min = 50.f;
 	this->enemy_spawn_timer = this->enemy_spawn_timer_min;
 }
 
@@ -48,35 +48,16 @@ void Enemies::update_collision(const sf::RenderTarget* target, Player* player, P
 			if (player_collision) {
 				player->health -= 10;
 			}
+			if (projectile_enemy_collision)
+			{
+				player->points += 1;
+			}
 			return window_collision || player_collision || projectile_enemy_collision;
 
 		}),
 		this->enemies.end()
 			);
 
-
-	//projectile.get_projectiles().erase(std::remove_if(
-	//	projectile.get_projectiles().begin(),
-	//	projectile.get_projectiles().end(),
-	//	[&e_shape](sf::RectangleShape const& missle) {
-	//		//projectile collision with enemy
-	//		bool collision = missle.getGlobalBounds().intersects(e_shape.getGlobalBounds());
-	//		return collision;
-
-	//	}),
-	//	projectile.get_projectiles().end()
-	//		);\
-	
-
-	//for (int j = 0; j < projectile.get_projectiles().size(); j++)
-	//{
-	//	if (projectile.get_projectiles()[j].getGlobalBounds().intersects(this->enemies[i].getGlobalBounds()))
-
-	//	{
-	//		this->enemies.erase(this->enemies.begin() + i);
-	//		//projectile.get_projectiles().erase(projectile.get_projectiles().begin() + j);
-	//	}
-	//}
 
 }
 

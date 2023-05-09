@@ -3,7 +3,7 @@
 
 Enemy::Enemy()
 {
-	this->movement_speed = 2.f;
+	this->movement_speed = 3.f;
 	this->init_shape();
 }
 

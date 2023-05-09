@@ -5,6 +5,7 @@ Player::Player()
 {
 	this->health = 100;
 	this->movement_speed = 7.f;
+	this->points = 0;
 	this->init_shape();
 	this->spawn_object();
 }
@@ -18,6 +19,7 @@ void Player::init_shape()
 
 void Player::spawn_object()
 {
+	
 	this->p_shape.setPosition(sf::Vector2f(390.f,500.f));
 }
 

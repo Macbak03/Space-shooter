@@ -26,12 +26,13 @@ private:
 	Enemies enemies;
 	Projectiles projectiles;
 
-	int points;
 
 	sf::Font font;
-	sf::Text text;
+	sf::Text points_text;
+	sf::Text health_text;
+	sf::Text game_over_text;
 
-	bool endGame;
+	//bool endGame;
 	//Functions
 	void initVariables();
 	void initWindow();
@@ -45,6 +46,7 @@ public:
 	//Accessors
 	const bool getWindowIsOpen();
 	//Functions
+	bool endGame();
 	void pollEvents();
 	void updateGui();
 	void update();
